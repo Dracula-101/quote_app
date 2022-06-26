@@ -1,20 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:quote_app/decorations/colors.dart';
 import 'package:quote_app/decorations/styles.dart';
-import 'package:quote_app/pages/API/get_quotes.api.dart';
-import 'package:quote_app/pages/API/models/author_quote.dart';
-import 'package:quote_app/pages/API/models/random_quote.api.dart';
-import 'package:quote_app/pages/API/models/search_quote.dart';
+import 'package:quote_app/pages/API/models/random_quote.dart';
 import 'package:quote_app/pages/API/random_quote.api.dart';
-import 'package:quote_app/pages/API/search.api.dart';
-import 'package:animations/animations.dart';
 import 'package:quote_app/pages/Home/controller/home_controller.dart';
 import 'package:quote_app/pages/SearchPage/search_page.dart';
 import 'package:quote_app/pages/utils/quote_card.dart';

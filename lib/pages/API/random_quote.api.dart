@@ -1,4 +1,4 @@
-import 'package:quote_app/pages/API/models/random_quote.api.dart';
+import 'package:quote_app/pages/API/models/random_quote.dart';
 import 'dart:convert';
 import 'package:quote_app/pages/constant/constant.dart';
 // ignore: depend_on_referenced_packages

@@ -43,7 +43,6 @@ class FavouriteController extends GetxController {
   }
 
   Future<void> copyIntoObject() async {
-    checkForDatabase();
     List<Map<String, dynamic>> records = await database!.query(tableName);
     favourites.clear();
     for (int i = 0; i < records.length; i++) {
@@ -55,7 +54,6 @@ class FavouriteController extends GetxController {
 
   Future<void> addtoDatabase(String authorId, String authorName, String content,
       List<String> tags) async {
-    checkForDatabase();
     String tagsDB = tags.join(",");
     String newContent = content.replaceAll(' ', '_');
     // String dataFinal = '$authorId, $authorName, $newContent, $tagsDB';
@@ -73,7 +71,6 @@ class FavouriteController extends GetxController {
   }
 
   Future<void> deleteFromDatabase(String authorId) async {
-    checkForDatabase();
     authorId = authorId.replaceAll("{", "");
     try {
       await database!
