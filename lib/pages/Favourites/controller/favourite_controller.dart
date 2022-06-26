@@ -1,45 +1,36 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:quote_app/pages/constant/constant.dart';
 import 'package:sqflite/sqflite.dart';
 
 class FavouriteController extends GetxController {
-  List<dynamic> favourites = [].obs;
+  RxList favourites = [].obs;
   Database? database;
   String tableName = 'favourites';
 
   @override
   void onInit() {
-    super.onInit();
     readFromDatabase();
-  }
-
-  @override
-  void onClose() {
-    database!.close();
+    super.onInit();
   }
 
   Future<bool> databaseExists() async =>
       await databaseFactory.databaseExists(databasePath);
 
   Future<void> readFromDatabase() async {
-    if (!await databaseExists() && database == null) {
-      createDatabase();
-      return;
-    } else {
-      copyIntoObject();
-    }
+    checkForDatabase().then((value) => copyIntoObject());
   }
 
-  Future<bool> checkForDatabase() async {
-    if (!await databaseExists()) {
+  Future<void> checkForDatabase() async {
+    if (!await databaseExists() || database == null) {
       createDatabase();
-      return false;
+    } else {
+      database = await openDatabase(
+        databasePath,
+        version: 1,
+      );
     }
-    database = await openDatabase(
-      databasePath,
-      version: 1,
-    );
-    return true;
   }
 
   Future<void> createDatabase() async {
@@ -53,10 +44,12 @@ class FavouriteController extends GetxController {
 
   Future<void> copyIntoObject() async {
     checkForDatabase();
-    List<Map> list = await database!.rawQuery('SELECT * FROM $tableName');
+    List<Map<String, dynamic>> records = await database!.query(tableName);
     favourites.clear();
-    favourites.add(list);
-    print(favourites);
+    for (int i = 0; i < records.length; i++) {
+      favourites.add(records.elementAt(i));
+    }
+    log(favourites.toString());
     update();
   }
 
@@ -66,14 +59,17 @@ class FavouriteController extends GetxController {
     String tagsDB = tags.join(",");
     String newContent = content.replaceAll(' ', '_');
     // String dataFinal = '$authorId, $authorName, $newContent, $tagsDB';
-    await database!.transaction((txn) async {
-      await txn.rawInsert(
-          'INSERT INTO $tableName (authorId,authorName,content,tags) VALUES(? ,?, ?, ?)',
-          [authorId, authorName, newContent, tagsDB]);
-    });
-    favourites.add({authorId, authorName, newContent, tags});
-    print(favourites);
-    update();
+    try {
+      await database!.transaction((txn) async {
+        await txn.rawInsert(
+            'INSERT INTO $tableName (authorId,authorName,content,tags) VALUES(? ,?, ?, ?)',
+            [authorId, authorName, content, tagsDB]);
+      });
+    } on Exception catch (e) {
+      Get.snackbar('Something went wrong', 'Error while add to favourites');
+    }
+    // favourites.add([authorId, authorName, newContent, tagsDB]);
+    copyIntoObject();
   }
 
   Future<void> deleteFromDatabase(String authorId) async {
@@ -87,12 +83,15 @@ class FavouriteController extends GetxController {
       return;
     }
     copyIntoObject();
+    // favourites.rem;
   }
 
   Future<void> deleteAll() async {
-    if (!await checkForDatabase()) {
-      await database!.rawDelete('DELETE FROM $tableName');
+    if (!await databaseExists()) {
+      await database!.rawDelete('DELETE * FROM  $tableName');
+      await database!.delete(tableName);
     }
     favourites.clear();
+    update();
   }
 }

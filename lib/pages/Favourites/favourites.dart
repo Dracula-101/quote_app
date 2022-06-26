@@ -88,6 +88,7 @@ class _FavouritesState extends State<Favourites> {
           FontAwesomeIcons.trashCanArrowUp,
           color: Colors.red.shade700,
         ),
+        backgroundColor: Colors.white60,
       ),
       body: SafeArea(
         child: Column(
@@ -114,14 +115,21 @@ class _FavouritesState extends State<Favourites> {
                             itemBuilder: ((context, index) {
                               List<String> data = getData(
                                   _.favourites.elementAt(index).toString());
-                              return FavouritesCard(
-                                authorName: data.elementAt(1),
-                                content: data.elementAt(2).replaceAll('_', " "),
-                                authorId: data.elementAt(0),
-                                tags: [
-                                  'famous-quotes',
-                                ],
-                              );
+                              return Obx(() => _controller.favourites.isEmpty
+                                  ? showNoFav(context)
+                                  : FavouritesCard(
+                                      authorName: _controller.favourites
+                                          .elementAt(index)['authorName'],
+                                      content: _controller.favourites
+                                          .elementAt(index)['content']
+                                          .replaceAll('_', " "),
+                                      authorId: _controller.favourites
+                                          .elementAt(index)['authorId'],
+                                      tags: _controller.favourites
+                                          .elementAt(index)['tags']
+                                          .split(',')
+                                          .toList(),
+                                    ));
                             }),
                           );
                         },
