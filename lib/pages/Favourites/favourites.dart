@@ -115,21 +115,19 @@ class _FavouritesState extends State<Favourites> {
                             itemBuilder: ((context, index) {
                               List<String> data = getData(
                                   _.favourites.elementAt(index).toString());
-                              return Obx(() => _controller.favourites.isEmpty
-                                  ? showNoFav(context)
-                                  : FavouritesCard(
-                                      authorName: _controller.favourites
-                                          .elementAt(index)['authorName'],
-                                      content: _controller.favourites
-                                          .elementAt(index)['content']
-                                          .replaceAll('_', " "),
-                                      authorId: _controller.favourites
-                                          .elementAt(index)['authorId'],
-                                      tags: _controller.favourites
-                                          .elementAt(index)['tags']
-                                          .split(',')
-                                          .toList(),
-                                    ));
+                              return FavouritesCard(
+                                authorName: _controller.favourites
+                                    .elementAt(index)['authorName'],
+                                content: _controller.favourites
+                                    .elementAt(index)['content']
+                                    .replaceAll('_', " "),
+                                authorId: _controller.favourites
+                                    .elementAt(index)['authorId'],
+                                tags: _controller.favourites
+                                    .elementAt(index)['tags']
+                                    .split(',')
+                                    .toList(),
+                              );
                             }),
                           );
                         },
