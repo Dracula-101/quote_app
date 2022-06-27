@@ -102,7 +102,8 @@ class _FavouritesState extends State<Favourites> {
               ),
             ),
             Obx(
-              () => _controller.favourites.isNotEmpty
+              () => _controller.favourites.isNotEmpty &&
+                      _controller.isLoadedFromDatabase.value
                   ? Expanded(
                       child: GetX<FavouriteController>(
                         init: FavouriteController(),

@@ -8,7 +8,7 @@ class FavouriteController extends GetxController {
   RxList favourites = [].obs;
   Database? database;
   String tableName = 'favourites';
-
+  RxBool isLoadedFromDatabase = false.obs;
   @override
   void onInit() {
     readFromDatabase();
@@ -24,7 +24,7 @@ class FavouriteController extends GetxController {
 
   Future<void> checkForDatabase() async {
     if (!await databaseExists() || database == null) {
-      createDatabase();
+      await createDatabase();
     } else {
       database = await openDatabase(
         databasePath,
@@ -46,6 +46,10 @@ class FavouriteController extends GetxController {
     List<Map<String, dynamic>> records = await database!.query(tableName);
     favourites.clear();
     for (int i = 0; i < records.length; i++) {
+      if (!isLoadedFromDatabase.value) {
+        isLoadedFromDatabase.value = true;
+        update();
+      }
       favourites.add(records.elementAt(i));
     }
     log(favourites.toString());
