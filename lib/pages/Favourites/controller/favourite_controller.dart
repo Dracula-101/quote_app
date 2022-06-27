@@ -84,9 +84,8 @@ class FavouriteController extends GetxController {
   }
 
   Future<void> deleteAll() async {
-    if (!await databaseExists()) {
-      await database!.rawDelete('DELETE * FROM  $tableName');
-      await database!.delete(tableName);
+    if (await databaseExists()) {
+      await database!.rawDelete('DELETE FROM  $tableName');
     }
     favourites.clear();
     update();

@@ -113,8 +113,6 @@ class _FavouritesState extends State<Favourites> {
                                 parent: BouncingScrollPhysics()),
                             itemCount: _controller.favourites.length,
                             itemBuilder: ((context, index) {
-                              List<String> data = getData(
-                                  _.favourites.elementAt(index).toString());
                               return FavouritesCard(
                                 authorName: _controller.favourites
                                     .elementAt(index)['authorName'],

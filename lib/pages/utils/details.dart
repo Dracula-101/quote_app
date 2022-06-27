@@ -97,9 +97,32 @@ class _DetailsPageState extends State<DetailsPage> {
                   textAlign: TextAlign.left,
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-              )
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      'Tags:  ',
+                      style: normalText,
+                    ),
+                    for (int i = 0; i < widget.tags.length; i++)
+                      Container(
+                        margin: const EdgeInsets.all(2),
+                        child: Chip(
+                          backgroundColor: Colors.white30,
+                          label: Text(widget.tags[i]),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
             ],
           ),
         ),
