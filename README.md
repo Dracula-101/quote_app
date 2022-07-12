@@ -10,13 +10,12 @@ This is a Flutter based app which shows random quotes, searches quotes and also 
 Home Page shows a variety of quotes ranging from most notable scientists to artists. It also has a like button to save into favourites
 
 <p align="center">
-  <img src="screenshots\home.jpeg" height="845" width="400" title="Home Page">
+  <img src="screenshots\home.jpeg" height="422" width="200" title="Home Page">
+   <img src="screenshots\refresh_home.jpeg" height="422" width="200" title="Refresh Home Page">
 </p>
 
 >The Home pages can refresh and show new quotes every time users pull down to refresh the page.
-><p align="center">
-  <img src="screenshots\refresh_home.jpeg" height="845" width="400" title="Refresh Home Page">
-</p>
+
 
 
 
