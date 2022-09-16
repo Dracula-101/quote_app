@@ -29,7 +29,6 @@ jobs:
       - run: flutter channel master
       - run: flutter upgrade
       - run: flutter packages get
-      - run: flutter test
       - run: flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
 
 #      - run: curl
